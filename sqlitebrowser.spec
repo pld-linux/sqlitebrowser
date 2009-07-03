@@ -20,7 +20,7 @@ to create databases, edit and search data using a familiarspreadsheet-
 
 %prep
 %setup -q -n %{name}
-sed -e -i 's/getline/sqlbrowser_getline/' sqlitebrowser/sqlbrowser_util.c
+sed -i -e 's/getline/sqlbrowser_getline/' sqlitebrowser/sqlbrowser_util.c
 
 %build
 export QTDIR="%{_prefix}"
