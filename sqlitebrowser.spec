@@ -26,7 +26,6 @@ to create databases, edit and search data using a familiarspreadsheet-
 
 %prep
 %setup -q
-sed -i -e 's/getline/sqlbrowser_getline/' sqlitebrowser/sqlbrowser_util.c
 # use system-wide qscintilla2
 sed -e '/QSCINTILLA_DIR[ }][^"]/d' -e 's/qcustomplot qscintilla2/qcustomplot/' -i CMakeLists.txt
 
