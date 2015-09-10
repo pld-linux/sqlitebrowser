@@ -1,14 +1,18 @@
-Summary:	SQLite Database Browser
+# TODO:	use system-wide QCustomPlot
+Summary:	DB Browser for SQLite
 Name:		sqlitebrowser
-Version:	1.3
+Version:	3.7.0
 Release:	1
-License:	Public domain
+License:	MPLv2/GPLv3
 Group:		Applications/Databases/Interfaces
-Source0:	http://dl.sourceforge.net/sqlitebrowser/%{name}-%{version}-src.tar.gz
-# Source0-md5:	d4dc8c6a95d5f005e493f3a5a2a10491
-URL:		http://sqlitebrowser.sourceforge.net/
-BuildRequires:	qmake
-BuildRequires:	qt-devel
+Source0:	https://github.com/sqlitebrowser/sqlitebrowser/archive/v%{version}.tar.gz
+# Source0-md5:	1033f076944316a713d4831bf581cf3a
+URL:		http://sqlitebrowser.org/
+BuildRequires:	antlr
+BuildRequires:	cmake >= 2.8.7
+BuildRequires:	qscintilla2-qt4-devel
+BuildRequires:	qt4-devel
+#BuildRequires:	QCustomPlot-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -19,26 +23,27 @@ to create databases, edit and search data using a familiarspreadsheet-
 -like interface, without the need to learn complicated SQL commands.
 
 %prep
-%setup -q -n %{name}
+%setup -q
 sed -i -e 's/getline/sqlbrowser_getline/' sqlitebrowser/sqlbrowser_util.c
+# use system-wide qscintilla2
+sed -e '/QSCINTILLA_DIR[ }][^"]/d' -e 's/qcustomplot qscintilla2/qcustomplot/' -i CMakeLists.txt
 
 %build
-export QTDIR="%{_prefix}"
-export QMAKESPEC="linux-g++"
-
-qmake sqlitedbbrowser.pro
+%cmake .
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_bindir}
 
-install sqlitebrowser/sqlitebrowser $RPM_BUILD_ROOT%{_bindir}
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc sqlitebrowser/LICENSING
-%attr(755,root,root) %{_bindir}/*
+%doc README.md
+%attr(755,root,root) %{_bindir}/%{name}
+%{_desktopdir}/%{name}.desktop
+%{_iconsdir}/hicolor/*/apps/%{name}.png
