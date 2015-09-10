@@ -11,8 +11,10 @@ URL:		http://sqlitebrowser.org/
 BuildRequires:	antlr
 BuildRequires:	cmake >= 2.8.7
 BuildRequires:	qscintilla2-qt4-devel
-BuildRequires:	qt4-devel
 #BuildRequires:	QCustomPlot-devel
+BuildRequires:	QtCore-devel
+BuildRequires:	QtGui-devel
+BuildRequires:	QtNetwork-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
