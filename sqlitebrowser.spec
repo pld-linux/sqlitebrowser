@@ -8,13 +8,16 @@ Group:		Applications/Databases/Interfaces
 Source0:	https://github.com/sqlitebrowser/sqlitebrowser/archive/v%{version}.tar.gz
 # Source0-md5:	1033f076944316a713d4831bf581cf3a
 URL:		http://sqlitebrowser.org/
-BuildRequires:	antlr
-BuildRequires:	cmake >= 2.8.7
-BuildRequires:	qscintilla2-qt4-devel
 #BuildRequires:	QCustomPlot-devel
 BuildRequires:	QtCore-devel
 BuildRequires:	QtGui-devel
 BuildRequires:	QtNetwork-devel
+BuildRequires:	antlr
+BuildRequires:	cmake >= 2.8.7
+BuildRequires:	qscintilla2-qt4-devel
+BuildRequires:	qt4-build
+BuildRequires:	qt4-linguist
+BuildRequires:	sqlite3-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -35,7 +38,6 @@ sed -e '/QSCINTILLA_DIR[ }][^"]/d' -e 's/qcustomplot qscintilla2/qcustomplot/' -
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
