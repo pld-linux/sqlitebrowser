@@ -2,7 +2,7 @@
 Summary:	DB Browser for SQLite
 Name:		sqlitebrowser
 Version:	3.7.0
-Release:	1
+Release:	2
 License:	MPLv2/GPLv3
 Group:		Applications/Databases/Interfaces
 Source0:	https://github.com/sqlitebrowser/sqlitebrowser/archive/v%{version}.tar.gz
