@@ -17,7 +17,11 @@ BuildRequires:	cmake >= 2.8.7
 BuildRequires:	qscintilla2-qt4-devel
 BuildRequires:	qt4-build
 BuildRequires:	qt4-linguist
+BuildRequires:	rpmbuild(macros) >= 1.596
 BuildRequires:	sqlite3-devel
+Requires:	desktop-file-utils
+Requires:	gtk-update-icon-cache
+Requires:	hicolor-icon-theme
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -46,6 +50,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post
+%update_desktop_database
+%update_icon_cache hicolor
+
+%postun
+%update_desktop_database
+%update_icon_cache hicolor
 
 %files
 %defattr(644,root,root,755)
