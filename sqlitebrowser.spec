@@ -53,3 +53,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/%{name}
 %{_desktopdir}/%{name}.desktop
 %{_iconsdir}/hicolor/*/apps/%{name}.png
+%{_datadir}/appdata/sqlitebrowser.desktop.appdata.xml
