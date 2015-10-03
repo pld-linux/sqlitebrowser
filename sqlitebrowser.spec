@@ -2,7 +2,7 @@
 Summary:	DB Browser for SQLite
 Name:		sqlitebrowser
 Version:	3.7.0
-Release:	4
+Release:	5
 License:	MPLv2/GPLv3
 Group:		Applications/Databases/Interfaces
 Source0:	https://github.com/sqlitebrowser/sqlitebrowser/archive/v%{version}.tar.gz
@@ -33,11 +33,16 @@ to create databases, edit and search data using a familiarspreadsheet-
 sed -e '/QSCINTILLA_DIR[ }][^"]/d' -e 's/qcustomplot qscintilla2/qcustomplot/' -i CMakeLists.txt
 
 %build
-%cmake .
+mkdir build
+cd build
+%cmake ../ \
+	-DBUILD_SHARED_LIBS:BOOL=OFF
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
+cd build
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
