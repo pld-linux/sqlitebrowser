@@ -1,0 +1,41 @@
+diff -rupN sqlitebrowser-3.11.2/cmake/FindQScintilla.cmake sqlitebrowser-3.11.2-new/cmake/FindQScintilla.cmake
+--- sqlitebrowser-3.11.2/cmake/FindQScintilla.cmake	2019-04-03 14:36:58.000000000 +0200
++++ sqlitebrowser-3.11.2-new/cmake/FindQScintilla.cmake	2019-04-04 10:37:16.923765903 +0200
+@@ -80,7 +80,7 @@ endif ()
+ 
+ 
+ find_library ( QSCINTILLA_LIBRARY
+-  NAMES qscintilla qscintilla2 libqscintilla2
++  NAMES qscintilla qscintilla2-qt5 libqscintilla2-qt5 qscintilla2_qt5 libqscintilla2_qt5
+   HINTS ${QT_LIBRARY_DIR}
+ )
+ 
+diff -rupN sqlitebrowser-3.11.2/CMakeLists.txt sqlitebrowser-3.11.2-new/CMakeLists.txt
+--- sqlitebrowser-3.11.2/CMakeLists.txt	2019-04-03 14:36:58.000000000 +0200
++++ sqlitebrowser-3.11.2-new/CMakeLists.txt	2019-04-04 10:37:16.923765903 +0200
+@@ -336,16 +335,6 @@ endif()
+ 		${QCUSTOMPLOT_DIR}
+ 		${ADDITIONAL_INCLUDE_PATHS}
+ 		src)
+-if(ANTLR2_FOUND)
+-    include_directories(${ANTLR2_INCLUDE_DIRS})
+-else()
+-    include_directories(${ANTLR_DIR})
+-endif()
+-if(QSCINTILLA_FOUND)
+-    include_directories(${QSCINTILLA_INCLUDE_DIR})
+-else()
+-    include_directories(${QSCINTILLA_DIR})
+-endif()
+ 
+ add_executable(${PROJECT_NAME}
+ 		${SQLB_HDR}
+@@ -396,7 +382,7 @@ endif()
+ if(QSCINTILLA_FOUND)
+     target_link_libraries(${PROJECT_NAME} ${QSCINTILLA_LIBRARIES})
+ else()
+-    target_link_libraries(${PROJECT_NAME} qscintilla2)
++    target_link_libraries(${PROJECT_NAME} qscintilla2_qt5)
+ endif()
+ 
+ if(WIN32 AND MSVC)

@@ -1,22 +1,26 @@
-# TODO:	use system-wide QCustomPlot
+# TODO:	use system-wide QCustomPlot and QHexEdit
 Summary:	DB Browser for SQLite
 Name:		sqlitebrowser
-Version:	3.7.0
-Release:	6
+Version:	3.11.2
+Release:	1
 License:	MPLv2/GPLv3
 Group:		Applications/Databases/Interfaces
-Source0:	https://github.com/sqlitebrowser/sqlitebrowser/archive/v%{version}.tar.gz
-# Source0-md5:	1033f076944316a713d4831bf581cf3a
+Source0:	https://github.com/sqlitebrowser/sqlitebrowser/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	9991541d1f93ebcd7769ac8e15475c71
+Patch0:		system-libs.patch
 URL:		http://sqlitebrowser.org/
-#BuildRequires:	QCustomPlot-devel
-BuildRequires:	QtCore-devel
-BuildRequires:	QtGui-devel
-BuildRequires:	QtNetwork-devel
+BuildRequires:	Qt5Concurrent-devel
+BuildRequires:	Qt5Gui-devel
+BuildRequires:	Qt5Network-devel
+BuildRequires:	Qt5PrintSupport-devel
+BuildRequires:	Qt5Test-devel
+BuildRequires:	Qt5Widgets-devel
+BuildRequires:	Qt5Xml-devel
 BuildRequires:	antlr
 BuildRequires:	cmake >= 2.8.7
-BuildRequires:	qscintilla2-qt4-devel
-BuildRequires:	qt4-build
-BuildRequires:	qt4-linguist
+BuildRequires:	qscintilla2-qt5-devel
+BuildRequires:	qt5-build
+BuildRequires:	qt5-linguist
 BuildRequires:	rpmbuild(macros) >= 1.596
 BuildRequires:	sqlite3-devel
 Requires:	desktop-file-utils
@@ -33,14 +37,16 @@ to create databases, edit and search data using a familiarspreadsheet-
 
 %prep
 %setup -q
-# use system-wide qscintilla2
-sed -e '/QSCINTILLA_DIR[ }][^"]/d' -e 's/qcustomplot qscintilla2/qcustomplot/' -i CMakeLists.txt
+%patch0 -p1
+
+%{__rm} -r libs/{antlr-*,qscintilla}
 
 %build
 mkdir build
 cd build
 %cmake ../ \
-	-DBUILD_SHARED_LIBS:BOOL=OFF
+	-DBUILD_SHARED_LIBS:BOOL=OFF \
+	-DQT_INCLUDE_DIR:PATH=%{_includedir}/qt5
 %{__make}
 
 %install
